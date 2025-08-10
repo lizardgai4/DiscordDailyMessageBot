@@ -10,9 +10,9 @@ with open('config.yaml', 'r') as file:
 TOKEN = configFile['token']
 tasks = configFile['tasks']
 #connect to discord 
-client = discord.Client()
+client = discord.Client(intents=discord.Intents.default())
 #set command prefix
-client = commands.Bot(command_prefix='dmb ')
+client = commands.Bot(intents=discord.Intents.default(), command_prefix='dmb ')
 #users that will receive messages
 users = []
 numTasks = 2
@@ -22,6 +22,7 @@ blacklistedDays = [item.lower() for item in configFile['blacklistedDays']]
 #--------Handles Events---------
 @client.event
 async def on_ready():
+    messageDaily.start()
     print("Bot is ready.")    
 
 
@@ -311,7 +312,5 @@ async def messageDaily():
 
 #TODO: save to config file
 #TODO: better help function
-
-messageDaily.start()
 #run bot using token    
 client.run(TOKEN)
